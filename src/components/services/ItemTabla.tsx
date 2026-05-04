@@ -17,12 +17,12 @@ const ItemTabla = () => {
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
         <div className="flex gap-3">
-          <Link 
+          <a 
             className="text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-1" 
-            to={``}
+            // to={``}
           >
             <i className="bi bi-pencil-square"></i> Editar
-          </Link>
+          </a>
           <button 
            
             className="text-red-500 hover:text-red-400 transition-colors flex items-center gap-1"
