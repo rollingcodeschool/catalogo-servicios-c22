@@ -21,9 +21,9 @@ const Menu = () => {
           {/* Logo */}
           <div className="shrink-0 flex items-center gap-2 text-xl tracking-wider">
             <LuCodeXml className="text-blue-500 text-2xl" />
-            <a className="font-bold" >
+            <Link to={'/'} className="font-bold" >
               CODE
-            </a>
+            </Link>
           </div>
 
           {/* Botón Hamburguesa (Móvil) */}
@@ -45,17 +45,17 @@ const Menu = () => {
           {/* Menú Desktop */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8 capitalize">
-              <a to="/" className={navLinkStyles}>
+              <NavLink to="/" className={navLinkStyles}>
                 Inicio
-              </a>
+              </NavLink>
 
-              <a to="/administrador" className={navLinkStyles}>
+              <NavLink to="/administrador" className={navLinkStyles}>
                 Administrador
-              </a>
+              </NavLink>
 
-              <a to="/login" className={navLinkStyles}>
+              <NavLink to="/login" className={navLinkStyles}>
                 Login
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -70,29 +70,29 @@ const Menu = () => {
         } md:hidden transition-all duration-300 ease-in-out bg-zinc-900 border-t border-zinc-800`}
       >
         <div className="px-4 pt-2 pb-6 space-y-2">
-          <a
+          <NavLink
             to="/"
             className={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
           >
             Inicio
-          </a>
+          </NavLink>
 
-          <a
+          <NavLink
             to="/administrador"
             className={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
           >
             Administrador
-          </a>
+          </NavLink>
 
-          <a
+          <NavLink
             to="/login"
             className={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
           >
             Login
-          </a>
+          </NavLink>
         </div>
       </div>
     </nav>
