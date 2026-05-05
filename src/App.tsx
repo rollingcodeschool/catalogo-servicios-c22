@@ -12,8 +12,8 @@ function App() {
      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
       <Menu></Menu>
       {/* <Inicio></Inicio> */}
-      <Administrador></Administrador>
-      {/* <Error404></Error404> */}
+      {/* <Administrador></Administrador> */}
+      <Error404></Error404>
       <Footer></Footer>
      </div>
   )
