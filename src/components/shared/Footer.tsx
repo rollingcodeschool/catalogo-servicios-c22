@@ -8,7 +8,7 @@ const Footer = () => {
           {/* Logo o Icono sutil */}
           <div className="flex items-center gap-2 mb-2 text-zinc-500">
             <i className="bi bi-code-slash text-xl"></i>
-            <span className="font-semibold text-sm tracking-widest uppercase">Code Academy</span>
+            <span className="font-semibold text-sm tracking-widest uppercase">Code</span>
           </div>
           
           <p className="text-sm">
