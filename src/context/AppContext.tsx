@@ -1,8 +1,11 @@
 import { createContext, useContext } from "react";
+import type { Servicio, ServicioFormData} from "../interfaces/servicios";
 
 export interface AppContextType {
   usuarioLogueado: boolean;
   setUsuarioLogueado: React.Dispatch<React.SetStateAction<boolean>>;
+  servicios: Servicio[];
+  crearServicio: (nuevoServicio: ServicioFormData) => void;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
