@@ -50,8 +50,17 @@ const FormularioServicio = ({ titulo }: FormularioProps) => {
       if (e) {
         (e.target as HTMLFormElement).reset();
       }
-    } else {
-      alert("aqui edito un servicio");
+    } else if (id) {
+      editarServicio(id, data);
+      Swal.fire({
+        title: "Servicio editado",
+        text: `El servicio '${data.nombreServicio}' fue editado correctamente`,
+        icon: "success",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#3b82f6",
+      });
+      navegacion("/administrador");
     }
   };
 
