@@ -13,7 +13,6 @@ const FormularioServicio = ({ titulo }: FormularioProps) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
   } = useForm<ServicioFormData>();
 // traigo los datos que necesito del contexto
