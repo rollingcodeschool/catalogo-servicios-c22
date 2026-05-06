@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { useAppContext } from "../../context/AppContext";
 
 // Definimos la estructura de los datos del formulario
 interface LoginFormInputs {
@@ -9,18 +10,47 @@ interface LoginFormInputs {
 }
 
 const Login = () => {
+  // usamos los datos necesarios del contexto
+  const { setUsuarioLogueado } = useAppContext();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInputs>();
+  const navegacion = useNavigate();
 
   const onSubmit = (data: LoginFormInputs) => {
     console.log(data);
+    //1- si los datos del formulario son correctos y coinciden con las credenciales del admin loguear al usuario
+    if (
+      data.email === import.meta.env.VITE_EMAIL &&
+      data.password === import.meta.env.VITE_PASSWORD
+    ) {
+      setUsuarioLogueado(true);
+      Swal.fire({
+        title: "Bienvenido Administrador",
+        text: "Ingresando al sistema",
+        icon: "success",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#3b82f6",
+      });
+      //redirecciono al admin
+      navegacion("/administrador");
+    } else {
+      Swal.fire({
+        title: "Ocurrió un error",
+        text: "Credenciales incorrectas",
+        icon: "error",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#ef4444",
+      });
+    }
   };
 
   return (
-    <section className="flex flex-grow items-center justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
+    <section className="flex grow items-center justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
       <div className="max-w-md w-full space-y-8 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800 shadow-2xl backdrop-blur-sm">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-white">

@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router";
 
 const ProtectorRutas = () => {
 
-  if (!false) {
+  if (!true) {
     return <Navigate to="/login" replace />;
   }
   return <Outlet />;
