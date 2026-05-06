@@ -6,6 +6,7 @@ export interface AppContextType {
   setUsuarioLogueado: React.Dispatch<React.SetStateAction<boolean>>;
   servicios: Servicio[];
   crearServicio: (nuevoServicio: ServicioFormData) => void;
+  borrarServicio: (idServicio: string) => void;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);

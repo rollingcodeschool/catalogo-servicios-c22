@@ -38,6 +38,12 @@ function App() {
     setServicios([...servicios, servicioNuevo]);
   };
 
+  const borrarServicio = (idServicio: string) => {
+    const serviciosFiltrados = servicios.filter((itemServicio) => itemServicio.id !== idServicio);
+    setServicios(serviciosFiltrados);
+  };
+
+
 
   return (
      <AppContext.Provider 
@@ -45,7 +51,8 @@ function App() {
       usuarioLogueado,
       setUsuarioLogueado,
       servicios,
-      crearServicio
+      crearServicio,
+      borrarServicio
     }}>
     <BrowserRouter>
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
