@@ -10,7 +10,7 @@ import FormularioServicio from "./components/pages/FormularioServicio";
 import ProtectorRutas from "./components/routes/ProtectorRutas";
 import { useEffect, useState } from "react";
 import { AppContext } from "./context/AppContext";
-import type { Servicio } from "./interfaces/servicios";
+import type { Servicio, ServicioFormData } from "./interfaces/servicios";
 
 function App() {
   const usuarioSessionStorage = JSON.parse(
@@ -24,6 +24,20 @@ function App() {
    useEffect(() => {
     sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
   }, [usuarioLogueado]);
+
+     useEffect(() => {
+    localStorage.setItem('serviciosKey', JSON.stringify(servicios));
+  }, [servicios]);
+
+// logicar para trabajar con los sercicios
+  const crearServicio = (dataServicio: ServicioFormData) => {
+    const servicioNuevo: Servicio = {
+      ...dataServicio,
+      id: crypto.randomUUID()
+    };
+    setServicios([...servicios, servicioNuevo]);
+  };
+
 
   return (
      <AppContext.Provider 
