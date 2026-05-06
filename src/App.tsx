@@ -8,8 +8,18 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import Login from "./components/pages/Login";
 import FormularioServicio from "./components/pages/FormularioServicio";
 import ProtectorRutas from "./components/routes/ProtectorRutas";
+import { useEffect, useState } from "react";
 
 function App() {
+  const usuarioSessionStorage = JSON.parse(
+    sessionStorage.getItem("usuarioKey") || "false",
+  );
+  const [usuarioLogueado, setUsuarioLogueado] = useState<boolean>(usuarioSessionStorage);
+
+   useEffect(() => {
+    sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
+  }, [usuarioLogueado]);
+
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
