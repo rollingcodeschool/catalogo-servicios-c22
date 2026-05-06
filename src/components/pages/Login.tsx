@@ -2,17 +2,13 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
-interface LoginProps {
-  setUsuarioLogueado: (estado: boolean) => void;
-}
-
 // Definimos la estructura de los datos del formulario
 interface LoginFormInputs {
   email: string;
   password: string;
 }
 
-const Login = ({ setUsuarioLogueado }: LoginProps) => {
+const Login = () => {
   const {
     register,
     handleSubmit,
