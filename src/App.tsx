@@ -7,6 +7,7 @@ import Error404 from "./components/pages/Error404";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Login from "./components/pages/Login";
 import FormularioServicio from "./components/pages/FormularioServicio";
+import ProtectorRutas from "./components/routes/ProtectorRutas";
 
 function App() {
   return (
@@ -18,9 +19,11 @@ function App() {
             <Route path="/" element={<Inicio></Inicio>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
             <Route path="/detalle-servicio" element={<DetalleServicio></DetalleServicio>}></Route>
-            <Route path="/administrador" element={<Administrador></Administrador>}></Route>
-            <Route path="/administrador/crear" element={<FormularioServicio titulo='Crear servicio'/>}></Route>
-            <Route path="/administrador/editar" element={<FormularioServicio titulo='Editar servicio'/>}></Route>
+            <Route path="/administrador" element={<ProtectorRutas/>}>
+              <Route index element={<Administrador/>}/>
+              <Route path="crear" element={<FormularioServicio titulo={'Crear Servicio'}></FormularioServicio>}/>
+              <Route path="editar/:id" element={<FormularioServicio titulo={'Editar Servicio'}></FormularioServicio>}/>
+            </Route>
             <Route path="*" element={<Error404></Error404>}></Route>
           </Routes>
         </main>
