@@ -9,6 +9,7 @@ import Login from "./components/pages/Login";
 import FormularioServicio from "./components/pages/FormularioServicio";
 import ProtectorRutas from "./components/routes/ProtectorRutas";
 import { useEffect, useState } from "react";
+import { AppContext } from "./context/AppContext";
 
 function App() {
   const usuarioSessionStorage = JSON.parse(
@@ -21,6 +22,11 @@ function App() {
   }, [usuarioLogueado]);
 
   return (
+     <AppContext.Provider 
+    value={{
+      usuarioLogueado,
+      setUsuarioLogueado
+    }}>
     <BrowserRouter>
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
         <Menu></Menu>
@@ -40,6 +46,7 @@ function App() {
         <Footer></Footer>
       </div>
     </BrowserRouter>
+    </AppContext.Provider>
   );
 }
 
