@@ -1,18 +1,12 @@
+import { Link } from "react-router";
 import type { Servicio } from "../../interfaces/servicios";
+import { formatearPrecio } from "../../utils/formateador";
 
 interface CardServicioProps {
   servicio: Servicio;
 }
 
 const CardServicio = ({ servicio }: CardServicioProps) => {
-  // Formateador de moneda para el precio
-  const formatearPrecio = (valor: number) => {
-    return new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-    }).format(valor);
-  };
-
   return (
     <article className="group bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-blue-500/50 transition-all duration-300 shadow-lg hover:shadow-blue-500/10 flex flex-col h-full">
       {/* Contenedor de Imagen */}
@@ -50,9 +44,12 @@ const CardServicio = ({ servicio }: CardServicioProps) => {
               </p>
             </div>
 
-            <button className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-md shadow-blue-900/20 active:scale-95">
+            <Link
+              to={`/detalle-servicio/${servicio.id}`}
+              className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-md shadow-blue-900/20 active:scale-95"
+            >
               Ver detalle
-            </button>
+            </Link>
           </div>
         </div>
       </div>
