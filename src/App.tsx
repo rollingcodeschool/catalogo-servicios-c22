@@ -78,7 +78,7 @@ const editarServicio = (
           <Routes>
             <Route path="/" element={<Inicio></Inicio>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
-            <Route path="/detalle-servicio" element={<DetalleServicio></DetalleServicio>}></Route>
+            <Route path="/detalle-servicio/:id" element={<DetalleServicio></DetalleServicio>}></Route>
             <Route path="/administrador" element={<ProtectorRutas/>}>
               <Route index element={<Administrador/>}/>
               <Route path="crear" element={<FormularioServicio titulo={'Crear Servicio'}></FormularioServicio>}/>
