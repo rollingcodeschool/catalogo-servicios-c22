@@ -32,7 +32,7 @@ const DetalleServicio = () => {
       />
       <p className="text-lg mb-2">
         <span className="font-semibold">Precio: </span>
-        $ {formatearPrecio(servicio.precio)}
+        {formatearPrecio(servicio.precio)}
       </p>
       <p className="text-lg mb-2">
         <span className="font-semibold">Categoría:</span> {servicio.categoria}
