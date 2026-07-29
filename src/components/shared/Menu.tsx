@@ -5,11 +5,13 @@ import { useAppContext } from "../../context/AppContext";
 
 const Menu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { usuarioLogueado, setUsuarioLogueado } = useAppContext();
+  const { usuarioLogueado, loadingSession, logoutBackend } = useAppContext();
   const navegacion = useNavigate();
 
-  const logout = () => {
-    setUsuarioLogueado(false);
+  const isAdmin = usuarioLogueado?.rol === "admin";
+
+  const logout = async () => {
+    await logoutBackend();
     navegacion("/");
   };
 
@@ -55,14 +57,17 @@ const Menu = () => {
                 Inicio
               </NavLink>
 
-              {usuarioLogueado ? (
+              {loadingSession ? (
+                <span className="text-zinc-400 text-sm">Cargando...</span>
+              ) : usuarioLogueado ? (
                 <>
-                  <NavLink to="/administrador" className={navLinkStyles}>
-                    Administrador
-                  </NavLink>
-                  {/* agregamos el boton de logout */}
+                  {isAdmin && (
+                    <NavLink to="/administrador" className={navLinkStyles}>
+                      Administrador
+                    </NavLink>
+                  )}
                   <button
-                    onClick={logout}
+                    onClick={() => void logout()}
                     className="flex items-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50"
                   >
                     <LuLogOut />
@@ -96,18 +101,22 @@ const Menu = () => {
             Inicio
           </NavLink>
 
-          {usuarioLogueado ? (
+          {loadingSession ? (
+            <span className="px-3 py-2 text-sm text-zinc-400">Cargando...</span>
+          ) : usuarioLogueado ? (
             <>
-              <NavLink
-                to="/administrador"
-                className={navLinkStyles}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Administrador
-              </NavLink>
+              {isAdmin && (
+                <NavLink
+                  to="/administrador"
+                  className={navLinkStyles}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Administrador
+                </NavLink>
+              )}
               <button
                 onClick={() => {
-                  logout();
+                  void logout();
                   setIsMenuOpen(false);
                 }}
                 className="flex items-center gap-2 w-full text-left px-3 py-2 text-red-400 font-medium hover:bg-red-900/20 rounded-md transition-colors"
