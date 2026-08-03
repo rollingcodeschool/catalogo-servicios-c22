@@ -3,16 +3,22 @@ import type { Servicio } from "../interfaces/servicios";
 const urlServicios = import.meta.env.VITE_SERVICIO + '/servicios';
 
 export interface ListarServiciosParams {
+  // support both legacy frontend names and backend names
   paginaNumero?: number;
   cantServicios?: number;
+  pagina?: number;
+  limite?: number;
   termino?: string;
 }
 
 export const listarServiciosApi = async (params: ListarServiciosParams = {}): Promise<Response> => {
   try {
     const query = new URLSearchParams();
-    query.set('paginaNumero', String(params.paginaNumero ?? 1));
-    query.set('cantServicios', String(params.cantServicios ?? 8));
+    // Backend expects `pagina` and `limite`. Accept legacy keys too.
+    const pagina = params.pagina ?? params.paginaNumero ?? 1;
+    const limite = params.limite ?? params.cantServicios ?? 8;
+    query.set('pagina', String(pagina));
+    query.set('limite', String(limite));
     if (params.termino) {
       query.set('termino', params.termino);
     }

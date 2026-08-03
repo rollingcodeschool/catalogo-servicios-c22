@@ -5,14 +5,13 @@ import { listarServiciosApi } from "../../helpers/queries";
 
 const Inicio = () => {
   const [servicios, setServicios] = useState<Servicio[]>([]);
-  const [cantidadTotal, setCantidadTotal] = useState(0);
+  const [cantidadServicios, setCantidadServicios] = useState(0);
   const [paginaActual, setPaginaActual] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(1);
   const [termino, setTermino] = useState("");
   const [filtro, setFiltro] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const cantServicios = 8;
-  const paginasTotales = Math.max(1, totalPaginas);
 
   useEffect(() => {
     cargarServicios(paginaActual, filtro);
@@ -21,17 +20,17 @@ const Inicio = () => {
   const cargarServicios = async (paginaNumero: number, terminoFiltro: string) => {
     setIsLoading(true);
 
-    try {
+      try {
       const respuestaServicios = await listarServiciosApi({
-        paginaNumero,
-        cantServicios,
+        pagina: paginaNumero,
+        limite: cantServicios,
         termino: terminoFiltro || undefined,
       });
 
       if (respuestaServicios.ok) {
         const datos = await respuestaServicios.json();
         setServicios(datos.servicios ?? []);
-        setCantidadTotal(datos.cantidadTotal ?? 0);
+        setCantidadServicios(datos.cantidadServicios ?? 0);
         setTotalPaginas(datos.totalPaginas ?? 1);
 
         if (typeof datos.paginaActual === "number" && datos.paginaActual !== paginaNumero) {
@@ -39,13 +38,13 @@ const Inicio = () => {
         }
       } else {
         setServicios([]);
-        setCantidadTotal(0);
+        setCantidadServicios(0);
         setTotalPaginas(1);
       }
     } catch (error) {
       console.error(error);
       setServicios([]);
-      setCantidadTotal(0);
+      setCantidadServicios(0);
       setTotalPaginas(1);
     } finally {
       setIsLoading(false);
@@ -83,12 +82,12 @@ const Inicio = () => {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800">
-              {cantidadTotal} servicios disponibles
+              {cantidadServicios} servicios disponibles
             </div>
             <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800">
-              Página {paginaActual} de {paginasTotales}
+              Página {paginaActual} de {totalPaginas}
             </div>
           </div>
         </div>
@@ -136,10 +135,10 @@ const Inicio = () => {
             ))}
           </div>
 
-          {totalPaginas > 1 && (
+          {(totalPaginas > 1 || cantidadServicios > cantServicios) && (
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6">
-              <div className="text-sm text-zinc-400">
-                Mostrando {servicios.length} de {cantidadTotal} resultados
+                <div className="text-sm text-zinc-400">
+                Mostrando {servicios.length} de {cantidadServicios} resultados
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-2">
