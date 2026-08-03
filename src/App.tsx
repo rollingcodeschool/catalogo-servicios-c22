@@ -67,14 +67,8 @@ function App() {
     checkAuth();
   }, []);
 
-  if (loadingSession) {
-    return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center text-zinc-400">
-        Comprobando sesión...
-      </div>
-    );
-  }
-  
+
+
   return (
     <AppContext.Provider
       value={{
