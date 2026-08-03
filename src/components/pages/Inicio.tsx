@@ -1,15 +1,16 @@
 import CardServicio from "../services/CardServicio";
-import type { Servicio } from '../../interfaces/servicios';
+import type { Servicio } from "../../interfaces/servicios";
 import { useEffect, useState, type FormEvent } from "react";
 import { listarServiciosApi } from "../../helpers/queries";
 
 const Inicio = () => {
   const [servicios, setServicios] = useState<Servicio[]>([]);
+  //estos state son para manejar los botones del paginado y la cantidad de servicios que se muestran
   const [cantidadServicios, setCantidadServicios] = useState(0);
   const [paginaActual, setPaginaActual] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(1);
-  const [termino, setTermino] = useState("");
-  const [filtro, setFiltro] = useState("");
+  const [termino, setTermino] = useState(""); //Es lo que el usuario escribe en tiempo real
+  const [filtro, setFiltro] = useState(""); //Es el valor confirmado para buscar en el submit
   const [isLoading, setIsLoading] = useState(false);
   const cantServicios = 8;
 
@@ -17,10 +18,13 @@ const Inicio = () => {
     cargarServicios(paginaActual, filtro);
   }, [paginaActual, filtro]);
 
-  const cargarServicios = async (paginaNumero: number, terminoFiltro: string) => {
+  const cargarServicios = async (
+    paginaNumero: number,
+    terminoFiltro: string,
+  ) => {
     setIsLoading(true);
 
-      try {
+    try {
       const respuestaServicios = await listarServiciosApi({
         pagina: paginaNumero,
         limite: cantServicios,
@@ -29,11 +33,14 @@ const Inicio = () => {
 
       if (respuestaServicios.ok) {
         const datos = await respuestaServicios.json();
-        setServicios(datos.servicios ?? []);
+        setServicios(datos.servicios ?? []); // ?? retorna B unicamente si es A es null
         setCantidadServicios(datos.cantidadServicios ?? 0);
         setTotalPaginas(datos.totalPaginas ?? 1);
 
-        if (typeof datos.paginaActual === "number" && datos.paginaActual !== paginaNumero) {
+        if (
+          typeof datos.paginaActual === "number" &&
+          datos.paginaActual !== paginaNumero
+        ) {
           setPaginaActual(datos.paginaActual);
         }
       } else {
@@ -70,7 +77,6 @@ const Inicio = () => {
 
   return (
     <section className="space-y-8 animate-fadeIn">
-      {/* Encabezado con estilo moderno */}
       <div className="space-y-6 border-b border-zinc-800 pb-5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -82,7 +88,7 @@ const Inicio = () => {
             </p>
           </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800">
               {cantidadServicios} servicios disponibles
             </div>
@@ -92,7 +98,10 @@ const Inicio = () => {
           </div>
         </div>
 
-        <form onSubmit={handleBuscar} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <form
+          onSubmit={handleBuscar}
+          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
+        >
           <label className="sr-only" htmlFor="buscador-servicios">
             Buscar servicios
           </label>
@@ -134,13 +143,13 @@ const Inicio = () => {
               <CardServicio key={servicio._id} servicio={servicio} />
             ))}
           </div>
-
+          {/* pie de la grilla */}
           {(totalPaginas > 1 || cantidadServicios > cantServicios) && (
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6">
-                <div className="text-sm text-zinc-400">
+              <div className="text-sm text-zinc-400">
                 Mostrando {servicios.length} de {cantidadServicios} resultados
               </div>
-
+{/* botones de paginacion */}
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <button
                   type="button"
@@ -171,7 +180,8 @@ const Inicio = () => {
         <div className="flex flex-col items-center justify-center py-20 bg-zinc-900/50 rounded-xl border border-dashed border-zinc-800">
           <i className="bi bi-search text-4xl text-zinc-700 mb-4"></i>
           <p className="text-zinc-500">
-            No se encontraron servicios {filtro ? `para '${filtro}'` : 'disponibles'}.
+            No se encontraron servicios{" "}
+            {filtro ? `para '${filtro}'` : "disponibles"}.
           </p>
         </div>
       )}

@@ -14,7 +14,7 @@ export interface ListarServiciosParams {
 export const listarServiciosApi = async (params: ListarServiciosParams = {}): Promise<Response> => {
   try {
     const query = new URLSearchParams();
-    // Backend expects `pagina` and `limite`. Accept legacy keys too.
+    // Backend espera `pagina` y `limite`. el termino es optativo
     const pagina = params.pagina ?? params.paginaNumero ?? 1;
     const limite = params.limite ?? params.cantServicios ?? 8;
     query.set('pagina', String(pagina));
