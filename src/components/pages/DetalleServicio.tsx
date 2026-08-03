@@ -27,6 +27,11 @@ const DetalleServicio = () => {
     return null;
   }
 
+  const categoria =
+    typeof servicio.categoria === "string"
+      ? servicio.categoria
+      : servicio.categoria?.nombre ?? "Sin categoría";
+
   return (
     <div className="max-w-xl mx-auto bg-zinc-900 rounded-lg shadow-lg p-8 mt-8">
       <h2 className="text-3xl font-bold mb-4 text-center">
@@ -42,7 +47,7 @@ const DetalleServicio = () => {
         {formatearPrecio(servicio.precio)}
       </p>
       <p className="text-lg mb-2">
-        <span className="font-semibold">Categoría:</span> {servicio.categoria}
+        <span className="font-semibold">Categoría:</span> {categoria}
       </p>
       <p className="mb-4">
         <span className="font-semibold">Descripción:</span>{" "}

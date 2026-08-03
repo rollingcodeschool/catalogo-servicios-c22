@@ -54,6 +54,11 @@ const ItemTabla = ({servicio, fila, setServicios}: ItemTablaProps) => {
   };
 
 
+  const categoria =
+    typeof servicio.categoria === "string"
+      ? servicio.categoria
+      : servicio.categoria?.nombre ?? "Sin categoría";
+
   return (
     <tr className="border-b border-zinc-800 hover:bg-zinc-900/50 transition-colors">
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 font-mono">
@@ -64,6 +69,9 @@ const ItemTabla = ({servicio, fila, setServicios}: ItemTablaProps) => {
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
          ${servicio.precio.toLocaleString('es-AR')}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-medium">
+        {categoria}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
         <div className="flex gap-3">

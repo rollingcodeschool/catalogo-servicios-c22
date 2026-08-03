@@ -1,14 +1,27 @@
 import type { Servicio } from "../interfaces/servicios";
 
-const urlServicios = import.meta.env.VITE_SERVICIO;
+const urlServicios = import.meta.env.VITE_SERVICIO + '/servicios';
 
-export const listarServiciosApi = async ():Promise<Response> => {
+export interface ListarServiciosParams {
+  paginaNumero?: number;
+  cantServicios?: number;
+  termino?: string;
+}
+
+export const listarServiciosApi = async (params: ListarServiciosParams = {}): Promise<Response> => {
   try {
-    const respuesta = await fetch(urlServicios);
-    return respuesta
+    const query = new URLSearchParams();
+    query.set('paginaNumero', String(params.paginaNumero ?? 1));
+    query.set('cantServicios', String(params.cantServicios ?? 8));
+    if (params.termino) {
+      query.set('termino', params.termino);
+    }
+
+    const respuesta = await fetch(`${urlServicios}?${query.toString()}`);
+    return respuesta;
   } catch (error) {
     console.error(error);
-    throw error
+    throw error;
   }
 };
 

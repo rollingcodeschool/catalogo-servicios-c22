@@ -7,6 +7,11 @@ interface CardServicioProps {
 }
 
 const CardServicio = ({ servicio }: CardServicioProps) => {
+  const categoria =
+    typeof servicio.categoria === "string"
+      ? servicio.categoria
+      : servicio.categoria?.nombre ?? "Sin categoría";
+
   return (
     <article className="group bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-blue-500/50 transition-all duration-300 shadow-lg hover:shadow-blue-500/10 flex flex-col h-full">
       {/* Contenedor de Imagen */}
@@ -18,7 +23,7 @@ const CardServicio = ({ servicio }: CardServicioProps) => {
         />
         <div className="absolute top-2 right-2">
           <span className="bg-zinc-950/80 backdrop-blur-sm text-blue-400 text-xs font-bold px-2 py-1 rounded border border-zinc-700 uppercase tracking-wider">
-            {servicio.categoria}
+            {categoria}
           </span>
         </div>
       </div>
