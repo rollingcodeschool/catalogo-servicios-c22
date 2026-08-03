@@ -1,8 +1,8 @@
 import type { Servicio } from "../interfaces/servicios";
 import type { Usuario } from "../context/AppContext";
 
-const urlServicios = import.meta.env.VITE_SERVICIO;
-const urlUsuarios = "http://localhost:3003/api/usuarios";
+const urlServicios = import.meta.env.VITE_SERVICIO+'/servicios';
+const urlUsuarios = import.meta.env.VITE_SERVICIO+"/usuarios";
 
 export const listarServiciosApi = async ():Promise<Response> => {
   try {
@@ -67,14 +67,14 @@ export const borrarServicioApi = async (id: string):Promise<Response> => {
     throw error
   }
 };
-
-export const verificarPerfilApi = async (): Promise<Response> => {
-  return fetch(`${urlUsuarios}/perfil`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-  });
-};
+// autenticacion
+// export const verificarPerfilApi = async (): Promise<Response> => {
+//   return fetch(`${urlUsuarios}/perfil`, {
+//     method: "GET",
+//     headers: { "Content-Type": "application/json" },
+//     credentials: "include",
+//   });
+// };
 
 export const loginBackendApi = async (email: string, password: string): Promise<Response> => {
   return fetch(`${urlUsuarios}/login`, {

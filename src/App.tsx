@@ -13,8 +13,7 @@ import { AppContext, type Usuario } from "./context/AppContext";
 import {
   loginBackendApi,
   logoutBackendApi,
-  obtenerPerfilApi,
-  verificarPerfilApi,
+  obtenerPerfilApi
 } from "./helpers/queries";
 
 function App() {
@@ -23,24 +22,9 @@ function App() {
 
   const checkAuth = async () => {
     try {
-      const res = await verificarPerfilApi();
-
-      if (res.ok) {
-        const data: Usuario = await res.json();
-        setUsuarioLogueado(data);
-        return;
-      }
-
-      if (res.status === 401 || res.status === 403) {
-        setUsuarioLogueado(null);
-        return;
-      }
-
-      setUsuarioLogueado(null);
-    } catch (error) {
-      if (error instanceof Error && error.message !== "Failed to fetch") {
-        console.error("Error al verificar la sesión:", error);
-      }
+      const perfil = await obtenerPerfilApi();
+      setUsuarioLogueado(perfil);
+    } catch {
       setUsuarioLogueado(null);
     } finally {
       setLoadingSession(false);
@@ -49,7 +33,6 @@ function App() {
 
   const loginBackend = async (email: string, pass: string): Promise<Usuario | null> => {
     setLoadingSession(true);
-
     try {
       const loginRes = await loginBackendApi(email, pass);
       const loginData = await loginRes.json();
@@ -57,7 +40,7 @@ function App() {
       if (!loginRes.ok) {
         throw new Error(loginData?.mensaje || "No se pudo iniciar sesión");
       }
-
+      // Consultamos los datos actualizados del perfil
       const perfil = await obtenerPerfilApi();
       setUsuarioLogueado(perfil);
       return perfil;
@@ -84,6 +67,14 @@ function App() {
     checkAuth();
   }, []);
 
+  if (loadingSession) {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center text-zinc-400">
+        Comprobando sesión...
+      </div>
+    );
+  }
+  
   return (
     <AppContext.Provider
       value={{
