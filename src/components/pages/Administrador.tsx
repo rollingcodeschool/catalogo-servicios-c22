@@ -101,6 +101,9 @@ const Administrador = () => {
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
                 Precio
               </th>
+              <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
+                Categoria
+              </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
                 Acciones
               </th>
